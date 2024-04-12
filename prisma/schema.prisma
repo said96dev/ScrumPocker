@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url = env("DATABASE_URL")
+}
+
+enum Role {
+    admin
+    user
+}
+model Room {
+    id String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+    name String
+    clerkId String
+    type String
+    controller String
+    autoRevealCards Boolean
+    showAveraging Boolean
+    emailAddress String 
+    createdAt DateTime @default(dbgenerated("now()"))
+    updatedAt DateTime @updatedAt
+    roomMember RoomMember[]
+}
+model RoomMember{
+    id String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+    name String
+    emailAddress String 
+    userId String
+    role String
+    roomId String @db.Uuid
+    room Room @relation(fields: [roomId] , references: [id])
+    vote String @default("--")
+    createdAt DateTime @default(dbgenerated("now()"))
+    updatedAt DateTime @updatedAt
+    
+
+}
+
