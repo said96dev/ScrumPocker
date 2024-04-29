@@ -7,6 +7,7 @@ import { Prisma } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import { PrismaClient } from '@prisma/client';
 import Pusher from 'pusher';
+import { supabase } from '@/services/supabaseClient'; // Importiere den Supabase-Client
 
 const prisma = new PrismaClient();
 
@@ -213,10 +214,11 @@ export async function UpdateVote(variables: { roomId: string, value: string }): 
                 vote: value,
             },
         });
-        await pusher.trigger(`vote-channel-${roomId}`, 'vote-updated', {
-            roomId: roomId,
-            vote: value,
-        });
+        const { error: triggerError } = await supabase
+            .from(`vote-channel-${roomId}`)
+            .update({ roomId, vote: value });
+
+        if (triggerError) throw new Error("Error triggering update event");
         return vote
     } catch (error) {
         console.log(error)
