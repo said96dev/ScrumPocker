@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Example Room",
+    "clerkId": "1",
+    "controller": "admin",
+    "autoRevealCards": true,
+    "showAveraging": true,
+    "emailAddress": "admin@example.com",
+    "hashedPassword": "hashedpassword123"
+  }
+]

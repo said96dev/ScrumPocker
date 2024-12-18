@@ -1,47 +1,69 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
-    admin
-    user
+  ADMIN
+  USER
 }
+
+enum VoteStatus {
+  PENDING
+  REVEALED
+  HIDDEN
+}
+
 model Room {
-    id String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-    name String
-    clerkId String
-    type String
-    controller String
-    autoRevealCards Boolean
-    showAveraging Boolean
-    emailAddress String 
-    createdAt DateTime @default(dbgenerated("now()"))
-    updatedAt DateTime @updatedAt
-    roomMember RoomMember[]
-}
-model RoomMember{
-    id String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-    name String
-    emailAddress String 
-    userId String
-    role String
-    roomId String @db.Uuid
-    room Room @relation(fields: [roomId] , references: [id])
-    vote String @default("--")
-    createdAt DateTime @default(dbgenerated("now()"))
-    updatedAt DateTime @updatedAt
-    
-
+  id              String        @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name            String
+  clerkId         String        
+  description     String?
+  controller      String
+  reset           String
+  autoRevealCards Boolean       @default(false)
+  showAveraging   Boolean       @default(false)
+  hashedPassword  String
+  emailAddress    String
+  voteStatus      VoteStatus    @default(HIDDEN)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  roomMembers     RoomMember[]
+  votingSystems   VotingSystem[]
 }
 
+model RoomMember {
+  id        Int      @id @default(autoincrement())
+  name      String
+  emailAddress String 
+  role      Role     @default(USER)
+  vote      String?  @default("--")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  roomId    String   @db.Uuid   // Geändert zu UUID, um mit Room.id kompatibel zu sein
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+}
+
+model Voting {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique
+  values        String[]
+  isDefault     Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  votingSystems VotingSystem[]
+}
+
+model VotingSystem {
+  id       Int    @id @default(autoincrement())
+  votingId Int
+  roomId   String @db.Uuid   // Geändert zu UUID, um mit Room.id kompatibel zu sein
+  room     Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  voting   Voting @relation(fields: [votingId], references: [id], onDelete: Cascade)
+  
+  @@unique([roomId, votingId])
+}

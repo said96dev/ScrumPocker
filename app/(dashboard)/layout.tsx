@@ -1,18 +1,14 @@
-import Navbar from '@/components/Navbar';
-import { FaBarsStaggered } from 'react-icons/fa6';
+import Navbar from '@/components/Navbar'
 
 const layout = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <div className='flex flex-col gap-10 bg-base-200'>
-            <Navbar />
-            <div className="flex flex-col justify-center min-h-screen">
-                <div className="bg-base-200 px-8 min-h-screen mt-8" >
-                    {children}
-                </div>
-            </div>
-        </div>
+  return (
+    <div className='bg-base-200 min-h-[100vh] flex flex-col'>
+      <Navbar />
+      <div className='flex-1 overflow-auto'>
+        <div className='bg-base-200 px-8'>{children}</div>
+      </div>
+    </div>
+  )
+}
 
-
-    );
-};
-export default layout;
+export default layout

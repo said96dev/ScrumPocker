@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "role": "ADMIN",
+    "vote": null,
+    "roomId": 1
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "role": "USER",
+    "vote": "5",
+    "roomId": 1
+  }
+]
