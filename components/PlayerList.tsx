@@ -65,8 +65,10 @@ export function PlayerList({
                     <FaRegTrashAlt className='h-4 w-4' />
                   </button>
                 )}
-
-                <span className='font-medium'>{player.name}</span>
+                <div className='flex flex-col'>
+                  <span className='font-medium'>{player.name}</span>
+                  <i className='text-xs'>{player.emailAddress}</i>
+                </div>
               </div>
               <span className='text-sm'>
                 {player.vote === '--' ? (

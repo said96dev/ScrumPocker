@@ -4,6 +4,11 @@ import { AuthShell } from '@/components/auth/auth-shell'
 export default function SignUpPage() {
   return (
     <AuthShell className=' m-auto'>
+      <h1 className='text-3xl font-bold mb-4'>Welcome to Scrum Poker</h1>
+      <p className='text-muted-foreground mb-6'>
+        Sign up to organize your Scrum planning quickly and efficiently. Start
+        your next meeting right here!
+      </p>
       <SignUp
         appearance={{
           elements: {
@@ -22,6 +27,14 @@ export default function SignUpPage() {
           },
         }}
       />
+      <footer className='mt-6 text-center text-sm text-muted-foreground'>
+        <p>
+          Already have an account?{' '}
+          <a href='/sign-in' className='text-primary'>
+            Log in here{' '}
+          </a>
+        </p>
+      </footer>
     </AuthShell>
   )
 }

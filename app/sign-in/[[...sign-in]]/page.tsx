@@ -3,7 +3,13 @@ import { AuthShell } from '@/components/auth/auth-shell'
 
 export default function SignInPage() {
   return (
-    <AuthShell className=' m-auto'>
+    <AuthShell className='m-auto'>
+      <h1 className='text-3xl font-bold mb-4'>Welcome to Scrum Poker</h1>
+      <p className='text-muted-foreground mb-6'>
+        Sign up to organize your Scrum planning quickly and efficiently. Start
+        your next meeting right here!
+      </p>
+
       <SignIn
         appearance={{
           elements: {
@@ -22,6 +28,15 @@ export default function SignInPage() {
           },
         }}
       />
+
+      <footer className='mt-6 text-center text-sm text-muted-foreground'>
+        <p>
+          No account yet?{' '}
+          <a href='/sign-up' className='text-primary'>
+            Register here{' '}
+          </a>
+        </p>
+      </footer>
     </AuthShell>
   )
 }

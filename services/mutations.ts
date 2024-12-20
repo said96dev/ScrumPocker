@@ -9,6 +9,7 @@ import {
   deletePlayersAction,
   resetVotes,
   updataRoomAction,
+  SendEmail,
 } from '@/utils/action'
 import {
   createAndEditRoomType,
@@ -19,6 +20,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { EditRoomType } from '@/utils/editRoomSchema'
 import { getAblyChannel } from '@/utils/ably'
+import { ContactFormInput } from '@/utils/contactShema'
 
 export function useCreateRoom() {
   const queryClient = useQueryClient()
@@ -188,6 +190,15 @@ export function useResetVotes() {
         queryKey: ['singleRoom'],
       })
       toast.success('Votes reset successfully')
+    },
+  })
+}
+
+export function useSendEmail() {
+  return useMutation({
+    mutationFn: (values: ContactFormInput) => SendEmail(values),
+    onSuccess: () => {
+      toast.success('Email sent successfully')
     },
   })
 }

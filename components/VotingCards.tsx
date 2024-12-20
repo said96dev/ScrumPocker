@@ -45,6 +45,7 @@ export function VotingCards({
 
   useEffect(() => {
     if (!selectedCard) setSelectedCard(player?.vote)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player])
 
   const handleCardClick = (card: string) => {

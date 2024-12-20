@@ -79,6 +79,7 @@ const PlayerContainer = ({ params }: { params: { id: string } }) => {
         setRevelCardsAndPublish(true)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
   const playerChannel = useChannel(

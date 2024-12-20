@@ -1,11 +1,9 @@
 'use server'
 import { currentUser } from '@clerk/nextjs'
 import {
-  RoomType,
   SearchType,
   createAndEditRoomType,
   createRoomMemberType,
-  RoomMember,
   SessionData,
 } from './type'
 import { Prisma } from '@prisma/client'
@@ -13,7 +11,8 @@ import { redirect } from 'next/navigation'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import { EditRoomType } from './editRoomSchema'
-
+import { Resend } from 'resend'
+import { ContactFormInput } from './contactShema'
 const prisma = new PrismaClient()
 
 export async function authenticateAndRedirect(): Promise<any> {
@@ -27,6 +26,24 @@ export async function GetCurrentUser(): Promise<any> {
   if (user)
     return { user: user.emailAddresses[0].emailAddress, name: user.firstName }
   return
+}
+
+export async function SendEmail(values: ContactFormInput) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  if (!process.env.RESEND_TO) {
+    throw new Error('Environment variable RESEND_TO is not set.')
+  }
+  try {
+    const { data } = await resend.emails.send({
+      to: 'saeed1996oof@gmail.com',
+      from: 'onboarding@resend.dev',
+      subject: 'Contact Form Message',
+      html: `<p>Name: ${values.name}</p><p>Message: ${values.message}</p><p>type: ${values.type}</p> <p>Name: ${values.email}</p>`,
+    })
+    return data
+  } catch (error) {
+    console.error('Error sending email:', error)
+  }
 }
 
 export async function GetCurrentPlayerById(

@@ -8,8 +8,33 @@ import { Toaster } from '@/components/ui/sonner'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Scrum Poker',
-  description: 'Scrum Poker Online - Free Tool for Planning Poker',
+  title: 'Scrum Poker | Free Online Planning Poker Tool',
+  description:
+    'Scrum Poker Online - A free, easy-to-use tool for agile teams to estimate and plan their work efficiently. Perfect for remote teams and distributed planning sessions.',
+  keywords: [
+    'Scrum Poker',
+    'Planning Poker',
+    'Agile Estimation',
+    'Scrum Tool',
+    'Team Planning',
+  ],
+  authors: [{ name: 'Said Al Hendi' }],
+  creator: 'Said Al Hendi',
+  publisher: 'Said Al Hendi',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: 'Scrum Poker | Free Online Planning Poker Tool',
+    description:
+      'Streamline your agile planning with our free online Scrum Poker tool. Perfect for remote teams and distributed planning sessions.',
+    siteName: 'Scrum Poker Online',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Scrum Poker | Free Online Planning Poker Tool',
+    description:
+      'Streamline your agile planning with our free online Scrum Poker tool. Perfect for remote teams and distributed planning sessions.',
+  },
 }
 
 export default function RootLayout({

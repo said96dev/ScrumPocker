@@ -66,7 +66,7 @@ export function GameStatsSkeleton() {
 
 export function PlayerListSkeleton() {
   return (
-    <div className='card bg-base-100 shadow-xl max-h-[50vh]'>
+    <div className='card bg-base-100 shadow-xl h-[50vh]'>
       <div className='card-body'>
         <div className='h-6 w-24 bg-base-300 rounded animate-pulse mb-4'></div>
         <div className='space-y-4'>

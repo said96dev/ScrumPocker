@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   createAndEditRoomSchema,
@@ -31,6 +31,7 @@ const CreateGameForm = ({
   const { mutate, isPending } = useCreateRoom()
   const [gameLink, setGameLink] = useState<string>('')
   const router = useRouter()
+  const [shareUrl, setShareUrl] = useState<string>('')
 
   const {
     register,
@@ -54,6 +55,11 @@ const CreateGameForm = ({
     },
   })
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setShareUrl(window.location.origin)
+    }
+  }, [])
   async function onSubmit(
     values: typeof mode extends 'edit' ? EditRoomType : createAndEditRoomType
   ) {
@@ -64,7 +70,7 @@ const CreateGameForm = ({
         votingId: Number(values.votingId),
         id: newUuid,
       }
-      setGameLink(`http://localhost:3000/room/join/${newUuid}`)
+      setGameLink(`${shareUrl}/room/${newUuid}`)
       mutate(updatedValues)
       await new Promise((resolve) => setTimeout(resolve, 4000))
       router.push('/my_games')

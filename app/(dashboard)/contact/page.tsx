@@ -4,13 +4,12 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { contactFormSchema, type ContactFormInput } from '@/utils/contactShema'
-import { MessageCircle, Bug, Lightbulb, Send } from 'lucide-react'
-import Image from 'next/image'
-import contact from '@/assets/contact.svg'
+import { Send } from 'lucide-react'
+import { useSendEmail } from '@/services/mutations'
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-
+  const { mutate, isSuccess } = useSendEmail()
   const form = useForm<ContactFormInput>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -24,7 +23,7 @@ export default function ContactPage() {
   async function onSubmit(data: ContactFormInput) {
     setIsSubmitting(true)
     try {
-      // Here you would typically send the data to your backend
+      //&mutate(data)
       console.log(data)
       await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
       setSubmitted(true)
@@ -35,7 +34,7 @@ export default function ContactPage() {
     }
   }
 
-  if (submitted) {
+  /*   if (submitted && isSuccess) {
     return (
       <div className=' mx-auto  container max-w-2xl py-8'>
         <div className='card bg-base-100 shadow-xl'>
@@ -62,7 +61,7 @@ export default function ContactPage() {
         </div>
       </div>
     )
-  }
+  } */
 
   return (
     <main>

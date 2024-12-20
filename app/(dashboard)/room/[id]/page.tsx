@@ -22,6 +22,7 @@ export default function SingleRoomPage({ params }: { params: { id: string } }) {
     if (!currentSession) {
       router.push(`/room/join/${params.id}`)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id, userLoading, user])
 
   const isLocalStorageAvailable =
