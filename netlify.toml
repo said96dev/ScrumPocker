@@ -1,2 +1,18 @@
-[build.environment]
-  NODE_VERSION = "16"
+[build]
+  command = "npm run build"
+  publish = ".next"
+  [build.environment]
+    NODE_VERSION = "16"
+    DATABASE_URL = "postgresql://scrumPocker_owner:0o6aQZDPHAhI@ep-old-wind-a294rwoq.eu-central-1.aws.neon.tech/scrumPocker?sslmode=require"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[context.production.environment]
+  PRISMA_CLIENT_ENGINE_TYPE = "binary"
+
+[context.production.command]
+  command = "npm install && npx prisma generate && npm run build"
